@@ -1,5 +1,5 @@
-#ifndef CVIDE_COOMAT
-#define CVIDE_COOMAT
+#ifndef CVIDE_COOMAT_H
+#define CVIDE_COOMAT_H
 
 #include <stddef.h>
 #include <stdlib.h>
