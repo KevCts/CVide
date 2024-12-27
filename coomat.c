@@ -3,14 +3,18 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-coomat init_coomat(size_t n, size_t m) {
-    double* values = (double *) calloc((n-1) * (m-1), sizeof(double));
-    coomat res = {n, m, values};
+coomat* init_coomat(size_t n, size_t m) {
+    coomat* res = malloc(sizeof(coomat));
+    res->size_i = n;
+    res->size_j = m;
+    res->values = (double *) calloc(n * m, sizeof(double));
     return res;
 }
 
 void free_coomat(coomat* matrix) {
-    free(matrix->values);
+    if (matrix->values != NULL)
+        free(matrix->values);
+    free(matrix);
 }
 
 double coomat_read_value(coomat* matrix, size_t i, size_t j) {
@@ -38,25 +42,25 @@ void print_coomat(coomat* matrix) {
         }
         printf("\n");
     }
-    free(matrix);
+    free_coomat(matrix);
 }
 
-coomat copy_coomat(coomat* matrix) {
-    coomat res = init_coomat(matrix->size_i, matrix->size_j);
+coomat* copy_coomat(coomat* matrix) {
+    coomat* res = init_coomat(matrix->size_i, matrix->size_j);
     for (int i = 0; i < matrix->size_i; i++) {
         for (int j = 0; j < matrix->size_j; j++) {
-            coomat_set_value(&res, i, j, coomat_read_value(matrix, i, j));
+            coomat_set_value(res, i, j, coomat_read_value(matrix, i, j));
         }
     }
     return res;
 }
 
-coomat sum_coomat(coomat* a, coomat* b){
-    coomat res = init_coomat(a->size_i, a->size_j);
+coomat* sum_coomat(coomat* a, coomat* b){
+    coomat* res = init_coomat(a->size_i, a->size_j);
     if (a->size_i == b->size_i && a->size_j == b->size_j){
         for (int i = 0; i < a->size_i; i++) {
             for (int j = 0; j < a->size_j; j++) {
-                coomat_set_value(&res, i, j, coomat_read_value(a, i, j) + coomat_read_value(b, i, j));
+                coomat_set_value(res, i, j, coomat_read_value(a, i, j) + coomat_read_value(b, i, j));
             }
         }
     }
@@ -66,11 +70,11 @@ coomat sum_coomat(coomat* a, coomat* b){
     return res;
 }
 
-coomat dot_coomat(double a, coomat* b){
-    coomat res = init_coomat(b->size_i, b->size_j);
+coomat* dot_coomat(double a, coomat* b){
+    coomat* res = init_coomat(b->size_i, b->size_j);
     for (int i = 0; i < b->size_i; i++) {
         for (int j = 0; j < b->size_j; j++) {
-            coomat_set_value(&res, i, j, a * coomat_read_value(b, i, j));
+            coomat_set_value(res, i, j, a * coomat_read_value(b, i, j));
         }
     }
 
@@ -110,8 +114,8 @@ bool equal_coomat(coomat* a, coomat* b) {
     return true;
 }
 
-coomat prod_coomat(coomat* a, coomat* b) {
-    coomat res = init_coomat(a->size_i, b->size_j);
+coomat* prod_coomat(coomat* a, coomat* b) {
+    coomat* res = init_coomat(a->size_i, b->size_j);
 
     if (a->size_j == b->size_i) {
         for (int i = 0; i < a->size_i; i++) {
@@ -120,7 +124,7 @@ coomat prod_coomat(coomat* a, coomat* b) {
                 for (int k = 0; k < a->size_j; k++) {
                     c += coomat_read_value(a, i, k) * coomat_read_value(b, k, j);
                 }
-                coomat_set_value(&res, i, j, c);
+                coomat_set_value(res, i, j, c);
             }
         }
     }
