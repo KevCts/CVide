@@ -47,6 +47,7 @@ coomat* prod_csr_coo(csrmat* a, coomat* b) {
     return res;
 }
 
+
 void free_csrmat(csrmat* matrix) {
     free(matrix->ia);
     free(matrix->ja);

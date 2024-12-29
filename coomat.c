@@ -17,6 +17,51 @@ void free_coomat(coomat* matrix) {
     free(matrix);
 }
 
+coomat_list* init_coomat_list(size_t size_i, size_t size_j) {
+    coomat_list* res = malloc(sizeof(coomat_list));
+    res->size_i = size_i;
+    res->size_j = size_j;
+    res->count = 0;
+    res->elements = NULL;
+    return res;
+}
+
+coomat_list* add_coomat_to_list(coomat_list* list, coomat* matrix) {
+    if ((matrix->size_i == list->size_i) && (matrix->size_j == list->size_j)) {
+        list->elements = realloc(list->elements, (list->count + 1) * sizeof(coomat*));
+        list->elements[list->count] = matrix;
+        list->count++;
+    }
+
+    return list;
+}
+
+coomat* coomat_from_list(coomat_list* list, size_t i) {
+    if (i < list->count)
+        return copy_coomat(list->elements[i]);
+    return NULL;
+}
+
+void coomat_fun_to_list(coomat* (*f)(coomat*), coomat_list* list) {
+    for (int i = 0; i < list->count; i++) {
+        list->elements[i] = f(list->elements[i]);
+    }
+}
+
+void double_fun_to_list(double (*f)(double), coomat_list* list) {
+    for (int i = 0; i < list->count; i++) {
+        list->elements[i] = fun_coomat(f, list->elements[i]);
+    }
+}
+
+void free_coomat_list(coomat_list* list) {
+    for (int i = 0; i < list->count; i++) {
+        free_coomat(list->elements[i]);
+    }
+
+    free(list);
+}
+
 double coomat_read_value(coomat* matrix, size_t i, size_t j) {
     if (i >= matrix->size_i || j >= matrix->size_j) {
         return 0;
@@ -52,6 +97,18 @@ coomat* copy_coomat(coomat* matrix) {
             coomat_set_value(res, i, j, coomat_read_value(matrix, i, j));
         }
     }
+    return res;
+}
+
+coomat* fun_coomat(double (*f)(double), coomat* matrix) {
+    coomat* res = init_coomat(matrix->size_i, matrix->size_j);
+
+    for (int i = 0; i < matrix->size_i * matrix->size_j; i++) {
+        res->values[i] = f(matrix->values[i]);
+    }
+
+    free_coomat(matrix);
+
     return res;
 }
 

@@ -11,7 +11,24 @@ typedef struct {
     double* values;
 } coomat;
 
+typedef struct {
+    size_t size_i, size_j, count;
+    coomat** elements;
+} coomat_list;
+
 coomat* init_coomat(size_t, size_t);
+
+coomat_list* init_coomat_list(size_t, size_t);
+
+coomat_list* add_coomat_to_list(coomat_list*, coomat*);
+
+coomat* coomat_from_list(coomat_list*, size_t);
+
+void coomat_fun_to_list(coomat* (*)(coomat*), coomat_list*);
+
+void double_fun_to_list(double (*)(double), coomat_list*);
+
+void free_coomat_list(coomat_list*);
 
 void free_coomat(coomat*);
 
@@ -25,11 +42,14 @@ coomat* copy_coomat(coomat*);
 
 coomat* sum_coomat(coomat*, coomat*);
 
+coomat* fun_coomat(double (*)(double), coomat*);
+
 coomat* dot_coomat(double, coomat*);
 
 bool equal_coomat(coomat*, coomat*);
 
 double scalar_coomat(coomat*, coomat*);
+
 
 coomat* prod_coomat(coomat*, coomat*);
 
