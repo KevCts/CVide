@@ -59,6 +59,9 @@ void free_coomat_list(coomat_list* list) {
         free_coomat(list->elements[i]);
     }
 
+    if (list->elements != NULL)
+        free(list->elements);
+     
     free(list);
 }
 
