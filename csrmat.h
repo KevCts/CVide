@@ -12,6 +12,8 @@ typedef struct {
 
 csrmat* coo_to_csr(coomat*);
 
+csrmat* copy_csrmat(csrmat*);
+
 void free_csrmat(csrmat*);
 
 coomat* prod_csr_coo(csrmat*, coomat*);

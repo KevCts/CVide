@@ -30,13 +30,35 @@ csrmat* coo_to_csr(coomat* coo) {
     return res;
 }
 
+csrmat* copy_csrmat(csrmat* matrix) {
+    csrmat* res = malloc(sizeof(csrmat));
+
+    res->size_i = matrix->size_i;
+    res->size_j = matrix->size_j;
+    res->nnn = matrix->nnn;
+    res->ia = calloc(res->size_i + 1, sizeof(size_t));
+    res->ja = calloc(res->nnn, sizeof(size_t));
+    res->values = calloc(res->nnn, sizeof(double));
+
+    for (size_t i = 0; i < res->size_i + 1; i++) {
+        res->ia[i] = matrix->ia[i];
+    }
+
+    for (size_t i = 0; i < res->nnn; i++) {
+        res->ja[i] = matrix->ja[i];
+        res->values[i] = matrix->values[i];
+    }
+
+    return res;
+}
+
 coomat* prod_csr_coo(csrmat* a, coomat* b) {
     coomat* res = init_coomat(a->size_i, b->size_j);
 
     for (int jb = 0; jb < b->size_j; jb++) {
         for (int i = 0; i < a->size_i; i++) {
             for(int j = a->ia[i]; j < a->ia[i+1]; j++) {
-                coomat_set_value(res, i, jb, coomat_read_value(res, i, jb) + coomat_read_value(b, a->ja[j], jb) * a->values[j]);
+                coomat_set_value(res, i, jb, coomat_read_value(res, i, jb) + (coomat_read_value(b, jb, a->ja[j]) * a->values[j]));
             }
         }
     }
