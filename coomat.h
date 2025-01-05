@@ -53,4 +53,6 @@ double scalar_coomat(coomat*, coomat*);
 
 coomat* prod_coomat(coomat*, coomat*);
 
+double norm_coomat(coomat*);
+
 #endif

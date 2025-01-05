@@ -2,6 +2,7 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <math.h>
 
 coomat* init_coomat(size_t n, size_t m) {
     coomat* res = malloc(sizeof(coomat));
@@ -192,4 +193,8 @@ coomat* prod_coomat(coomat* a, coomat* b) {
     free_coomat(a);
     free_coomat(b);
     return res;
+}
+
+double norm_coomat(coomat* a) {
+    return sqrt(scalar_coomat(copy_coomat(a), a));
 }
