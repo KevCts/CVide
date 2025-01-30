@@ -159,6 +159,20 @@ double scalar_coomat(coomat* a, coomat* b) {
     return res;
 }
 
+coomat* transpose_coomat(coomat* mat){
+    coomat* res = init_coomat(mat->size_j, mat->size_i);
+
+    for (int i = 0; i < mat->size_i; i++) {
+        for (int j = 0; j < mat->size_j; j++) {
+            coomat_set_value(res, j, i, coomat_read_value(mat, i, j));
+        }
+    }
+
+    free_coomat(mat);
+
+    return res;
+}
+
 bool equal_coomat(coomat* a, coomat* b) {
     if (a->size_i != b->size_i && a->size_j != b->size_j){
         return false; 

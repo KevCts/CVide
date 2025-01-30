@@ -50,6 +50,7 @@ bool equal_coomat(coomat*, coomat*);
 
 double scalar_coomat(coomat*, coomat*);
 
+coomat* transpose_coomat(coomat*);
 
 coomat* prod_coomat(coomat*, coomat*);
 
