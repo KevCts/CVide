@@ -87,7 +87,7 @@ double coomat_set_value(coomat* matrix, size_t i, size_t j, double value) {
 void print_coomat(coomat* matrix) {
     for (int i = 0; i < matrix->size_i; i++) {
         for (int j = 0; j < matrix->size_j; j++) {
-            printf("%lf | ", coomat_read_value(matrix, i, j));
+            printf("\t%lf\t|", coomat_read_value(matrix, i, j));
         }
         printf("\n");
     }
