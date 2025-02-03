@@ -212,3 +212,38 @@ coomat* prod_coomat(coomat* a, coomat* b) {
 double norm_coomat(coomat* a) {
     return sqrt(scalar_coomat(copy_coomat(a), a));
 }
+
+coomat* coomat_remove_col(coomat* mat, size_t col) {
+    if(col >= mat->size_j) {
+        return mat;
+    }
+    coomat* res = init_coomat(mat->size_i, mat->size_j - 1);
+    for (size_t i = 0; i < mat->size_i; i++) {
+        for (size_t j = 0; j < col; j++) {
+            coomat_set_value(res, i, j, coomat_read_value(mat, i, j));
+        }
+        for (size_t j = col; j + 1 < mat->size_i; j++) {
+            coomat_set_value(res, i, j, coomat_read_value(mat, i, j + 1));
+        }
+    }
+    
+    free_coomat(mat);
+    return res;
+}
+
+coomat* coomat_remove_line(coomat* mat, size_t line){
+    if(line >= mat->size_i) {
+        return mat;
+    }
+    coomat* res = init_coomat(mat->size_i - 1, mat->size_j);
+    for (size_t i = 0; i < mat->size_i; i++) {
+        for (size_t j = 0; j < line; j++) {
+            coomat_set_value(res, j, i, coomat_read_value(mat, j, i));
+        }
+        for (size_t j = line; j + 1 < mat->size_i; j++) {
+            coomat_set_value(res, j, i, coomat_read_value(mat, j + 1, i));
+        }
+    }
+    free_coomat(mat);
+    return res;
+}

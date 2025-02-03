@@ -56,4 +56,8 @@ coomat* prod_coomat(coomat*, coomat*);
 
 double norm_coomat(coomat*);
 
+coomat* coomat_remove_col(coomat*, size_t col);
+
+coomat* coomat_remove_line(coomat*, size_t line);
+
 #endif
