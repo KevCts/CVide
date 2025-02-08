@@ -60,4 +60,6 @@ coomat* coomat_remove_col(coomat*, size_t col);
 
 coomat* coomat_remove_line(coomat*, size_t line);
 
+coomat* coomat_from_array(size_t, size_t, double*);
+
 #endif

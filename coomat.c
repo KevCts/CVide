@@ -70,7 +70,7 @@ double coomat_read_value(coomat* matrix, size_t i, size_t j) {
     if (i >= matrix->size_i || j >= matrix->size_j) {
         return 0;
     } else {
-        return matrix->values[i * matrix->size_i + j];
+        return matrix->values[i * matrix->size_j + j];
     }
 }
 
@@ -79,8 +79,8 @@ double coomat_set_value(coomat* matrix, size_t i, size_t j, double value) {
     if (i >= matrix->size_i || j >= matrix->size_j) {
         return 0;
     } else {
-        matrix->values[i * matrix->size_i + j] = value;
-        return matrix->values[i * matrix->size_i + j];
+        matrix->values[i * matrix->size_j + j] = value;
+        return matrix->values[i * matrix->size_j + j];
     }
 }
 
@@ -245,5 +245,15 @@ coomat* coomat_remove_line(coomat* mat, size_t line){
         }
     }
     free_coomat(mat);
+    return res;
+}
+
+coomat* coomat_from_array(size_t size_i, size_t size_j, double* values) {
+    coomat* res = init_coomat(size_i, size_j);
+
+    for (size_t i = 0; i < size_i * size_j; i++){
+        res->values[i] = values[i]; 
+    }
+
     return res;
 }
