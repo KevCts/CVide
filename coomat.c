@@ -257,3 +257,15 @@ coomat* coomat_from_array(size_t size_i, size_t size_j, double* values) {
 
     return res;
 }
+
+double* array_from_coomat(coomat* mat){
+    double* res = (double*) calloc(mat->size_i * mat->size_j, sizeof(double));
+
+    for (size_t i = 0; i < mat->size_i * mat->size_j; i++) {
+        res[i] = mat->values[i];
+    }
+
+    free_coomat(mat);
+
+    return res;
+}
