@@ -56,7 +56,7 @@ coomat* minres(coomat* a, coomat* b, coomat* x0, double eps, int max_it) {
         coomat* s_temp = prod_coomat(copy_coomat(a), coomat_from_list(s, k-1));
 
 
-        beta = scalar_coomat(coomat_from_list(s, k), coomat_from_list(s, k-1))/scalar_coomat(coomat_from_list(s, k-1), coomat_from_list(s, k-1));
+        beta = scalar_coomat(copy_coomat(s_temp), coomat_from_list(s, k-1))/scalar_coomat(coomat_from_list(s, k-1), coomat_from_list(s, k-1));
         p_temp = sum_coomat(p_temp, dot_coomat(-1 * beta, coomat_from_list(p, k-1)));
         s_temp = sum_coomat(s_temp, dot_coomat(-1 * beta, coomat_from_list(s, k-1)));
 
