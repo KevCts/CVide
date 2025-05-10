@@ -1,4 +1,5 @@
 #include "csrmat.h" 
+#include <stdlib.h>
 
 csrmat* coo_to_csr(coomat* coo) {
     csrmat* res = malloc(sizeof(csrmat));
