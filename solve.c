@@ -1,6 +1,4 @@
 #include "solve.h"
-#include "coomat.h"
-#include <stdio.h>
 
 coomat_list* Euler_explicit(coomat* (*f)(coomat*), coomat* y0, double step, int step_count) {
     coomat_list* y = init_coomat_list(y0->size_i, y0->size_j);

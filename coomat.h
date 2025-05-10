@@ -2,8 +2,6 @@
 #define CVIDE_COOMAT_H
 
 #include <stddef.h>
-#include <stdlib.h>
-#include <stdio.h>
 #include <stdbool.h>
 
 typedef struct {

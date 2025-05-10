@@ -70,3 +70,8 @@ CMakeUserPresets.json
 
 # Tests
 test/
+
+# cinclude2dot
+cinclude2dot
+inc.dot
+inc.svg
